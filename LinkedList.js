@@ -55,6 +55,7 @@ class Node {
 class LinkedList {
   constructor() {
     this.head = null;
+    this.tail = null;
     this.size = 0;
   }
 
@@ -96,16 +97,15 @@ class LinkedList {
   removeFrom(index) {
     if (index < 0 || index >= this.size) {
       return;
-    } 
-    else{
-      let curr = this.head
-      let temp
-      for(let i = 0; i < index-2; i++){
-        curr = curr.next
+    } else {
+      let curr = this.head;
+      let temp;
+      for (let i = 0; i < index - 2; i++) {
+        curr = curr.next;
       }
-      temp = curr.next.next
-      curr.next = temp
-      this.size++
+      temp = curr.next.next;
+      curr.next = temp;
+      this.size++;
     }
   }
   prepend(value) {
@@ -118,21 +118,20 @@ class LinkedList {
     }
     this.size++;
   }
-  search(value){
-    if(this.isEmpty()){
+  search(value) {
+    if (this.isEmpty()) {
       return;
-    }
-    else{
+    } else {
       let current = this.head;
-      while (current){
-        if(current.value==value){
-          console.log('Searched value found');
+      while (current) {
+        if (current.value == value) {
+          console.log("Searched value found");
           return true;
         }
-        current=current.next;
+        current = current.next;
       }
     }
-    return false
+    return false;
   }
   print() {
     if (this.isEmpty()) {
@@ -147,21 +146,69 @@ class LinkedList {
       console.log(listValues);
     }
   }
-  reverse(){
-    if(this.isEmpty()){
+  reverse() {
+    if (this.isEmpty()) {
       return;
-    }
-    else{
+    } else {
       let prev = null;
       let curr = this.head;
-      while(curr){
+      while (curr) {
         let next = curr.next;
         curr.next = prev;
-        prev = curr
-        curr = next
+        prev = curr;
+        curr = next;
       }
-      this.head = prev
+      this.head = prev;
     }
+  }
+  prependTail(value) {
+    let node = new Node(value);
+    if (this.isEmpty()) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      node.next = this.head;
+      this.head = node;
+    }
+    this.size++;
+  }
+  appendTail(value) {
+    let node = new Node(value);
+    if (this.isEmpty()) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      this.tail.next = node;
+      this.tail = node;
+    }
+    this.size++;
+  }
+  removeFromFront() {
+    if (this.isEmpty()) {
+      return null;
+    }
+    const value = this.head.value;
+    this.head = this.head.next;
+    this.size--;
+    return value;
+  }
+  removeFromEnd() {
+    if (this.isEmpty()) {
+      return null;
+    }
+    if (this.size === 1) {
+      this.head = null;
+      this.tail = null;
+    } else {
+      let prev = this.head;
+      while (prev.next !== this.tail) {
+        prev = prev.next;
+      }
+      prev.next = null;
+      this.tail = prev;
+    }
+    this.size--;
+    return value;
   }
 }
 
@@ -173,8 +220,8 @@ linkedList.prepend(30);
 linkedList.append(40);
 linkedList.insert(99, 2);
 linkedList.insert(44, 2);
-linkedList.removeFrom(3)
-console.log(linkedList.search(10)); 
+linkedList.removeFrom(3);
+console.log(linkedList.search(10));
 linkedList.print();
-linkedList.reverse()
+linkedList.reverse();
 linkedList.print();
